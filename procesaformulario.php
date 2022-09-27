@@ -2,26 +2,27 @@
             
             <?php
             
-            $patronnombre= "/^([A-Za-z\s]){3,25}$/";
+            $patronombre= "/^([A-Za-z\s]){3,25}$/";
             $patroncontrasena="/^[:alnum:\S]{6,8}$/";
             $patroncorreo="/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/";
-            $patrontelefono="/^([0-9])*$/";
+            $patrontelefono="/^([9-9])*$/";
 
+            $nombre= filter_input(INPUT_POST, "name");
+            $contrasena= filter_input(INPUT_POST, "password");
+            $email= filter_input(INPUT_POST, "email",FILTER_VALIDATE_EMAIL);
+            $telefono=filter_input(INPUT_POST, "tel");
+            $diacumpleaños=filter_input(INPUT_POST, "dateofbirth");
+            $edad=filter_input(INPUT_POST, "age");
+            $shop=filter_input(INPUT_POST, "shop");
+            $subscription=filter_input(INPUT_POST, "subscription");
             
-            $contrasena=filter_input(INPUT_POST,'password');
-            $nombre=filter_input(INPUT_POST,'name');
-            $email=filter_input(INPUT_POST,'email',FILTER_VALIDATE_EMAIL);
-            $telefono=filter_input(INPUT_POST,'tel');
-            $fecha=filter_input(INPUT_POST,'dateofbirth');
-            $shop= filter_input(INPUT_POST, 'shop');
-                    
-                    
+            
             if (preg_match($patroncontrasena,$contrasena)&& 
-                    preg_match($patronnombre,$nombre) && 
+                    preg_match($patronombre,$nombre) && 
                     preg_match($patroncorreo,$email)&& 
                     preg_match($patrontelefono,$telefono) && 
                     isset ($_POST['age'])&&
-                    !$fecha=="" )
+                    !$diacumpleaños=="")
             {?>
 <!DOCTYPE html>
 <html>
@@ -32,53 +33,30 @@
         <link rel="stylesheet" href="stylesheet.css">
     </head>
      
-    <body>
+    
         <div class="form-font capaform">
             
-            <p>Nombre: <?php echo "$nombre"; ?></p>  
+            <p>Nombre: <?php echo "$nombre";?></p>  
             <p>Conraseña: <?php echo "$contrasena"; ?></p>
             <p>Email: <?php echo "$email"; ?></p>
             <p>Fecha de cumpleaños: <?php echo "$fecha"; ?></p>
             <p>Telefono movil: <?php echo "$telefono"; ?></p>
-            <p>Tienda: <?php $shop=$_POST ['shop'];
-            if ($shop=="")
-                echo "No has elegido ciudad";
-            else 
-                echo "$shop";
-            ?> 
-            </p>
-           
-            
-            
-            <p>Edad: <?php 
-            
-            if(!isset ($_POST['age']))
-            {
-                echo "No has elegido ninguna edad";
-            } 
-            else 
-            {
-                $edad=($_POST['age']);
-                if ($edad<"25")
-                    echo "Eres menor de 25 años";
-                else if($edad=="25-50")
-                    echo "Tu edad esta entre 25 y 50 años";
-                else 
-                    echo "tienes mas de 50 años";
-            }
+            <p>Tienda: <?php echo "$shop"; ?> </p>
+            <p>Edad: <?php
+                if ($edad<"25"){
+                echo "Eres menor de 25 años";}
+                else if($edad=="25-50"){
+                echo "Tu edad esta entre 25 y 50 años";}
+                else {
+                echo "tienes mas de 50 años";}
             ?></p>
-            
-            
-            <p>Subscription: <?php 
-            
+            <p>Subscription: <?php
             if(!isset ($_POST ['subscription']))
             {
                 echo "No te has suscrito";
             } 
-            else 
-            {
-                echo "Te has suscrito";
-            }
+            else{
+                echo "Te has suscrito";}
             ?> 
             </p> 
             
@@ -102,7 +80,7 @@
                     <div class="flex-outer">
                         <div class="form-section">
                             <label for="name">Name:</label> 
-                            <?php if (!preg_match($patron,$nombre)) { ?> 
+                            <?php if (!preg_match($patronombre,$nombre)) { ?> 
                             
                             <input id="name" type="text" name="name" placeholder="Enter your name:" >
                             <p style="color:red" >* El campo nombre puede contener solo mayusculas, minusculas y espacios</p>
@@ -131,10 +109,10 @@
                         <div class="form-section">
                             <label for="dateofbirth">Date of Birth:</Label> 
                             <input id="dateofbirth" type="date" name="dateofbirth" placeholder="Enter your date of birth">
-                            <?php if ($dateof=="") { ?> 
+                            <?php if ($diacumpleaños=="") { ?> 
                             <p style="color:red">*Es obligatorio introducir tu edad<p>
                             <?php }else { ?>
-                            <!--<input id="dateofbirth" type="date" name="dateofbirth" placeholder="Enter your date of birth" value="<?php echo $dateof=$_POST['dateofbirth'];?>" />--> 
+                            <!--<input id="dateofbirth" type="date" name="dateofbirth" placeholder="Enter your date of birth" value="<?php echo $diacumpleaños=$_POST['dateofbirth'];?>" />--> 
                             <?php } ?>
                         </div>
                         <div class="form-section">
@@ -147,21 +125,32 @@
                             <?php } ?>
                         </div>
                         <div class="form-section">
+                            
                             <label for="shop">Closest Shop:</Label> 
                             <select id="shop" name="shop">
-                                <option value="Madrid">Madrid</option>
-                                <option value="Barcelona">Barcelona</option>
-                                <option value="Valencia">Valencia</option>
+                                <?php if ($shop=="Madrid"){?>
+                                <option value="Madrid" selected>Madrid</option>
+                                <option value="Barcelona" >Barcelona</option>
+                                <option value="Valencia" >Valencia</option>
+                                <?php } else if ($shop=="Barcelona"){?>
+                                <option value="Madrid" >Madrid</option>
+                                <option value="Barcelona" selected >Barcelona</option>
+                                <option value="Valencia" >Valencia</option>
+                                <?php }else if ($shop=="Valencia"){?>
+                                <option value="Madrid" >Madrid</option>
+                                <option value="Barcelona"  >Barcelona</option>
+                                <option value="Valencia" selected>Valencia</option>
+                                <?php }?>
                             </select> 
+                            
                         </div>
                         <div class="form-section">
                             <label>Age:</label>
                             <div class="select-section">
-                                
-                                 <?php switch (age) {
+                                <?php switch ($edad) {
                                 case "-25": ?>
                                     <div>
-                                    <input id="-25" type="radio" name="age" value="-25" chechked /> 
+                                        <input id="-25" type="radio" name="age" value="-25" checked="" /> 
                                     <label for="-25">Younger than 25</label>
                                 </div>
                                 <div>
@@ -172,21 +161,21 @@
                                     <input id="50-" type="radio" name="age" value="50-" />
                                     <label for="50-">Older than 50</label>
                                 </div>
-                                <?php
+                                <?php ;break;  
                                 case "25-50": ?>
                                     <div>
                                     <input id="-25" type="radio" name="age" value="-25" /> 
                                     <label for="-25">Younger than 25</label>
                                 </div>
                                 <div>
-                                    <input id="25-50" type="radio" name="age" value="25-50" chechked/> 
+                                    <input id="25-50" type="radio" name="age" value="25-50" checked="" /> 
                                     <label for="25-50">Between 25 and 50</label>
                                 </div>
                                 <div>
                                     <input id="50-" type="radio" name="age" value="50-" />
                                     <label for="50-">Older than 50</label>
                                 </div>
-                                <?php
+                                <?php  ;break;  
                                 case "50-": ?><div>
                                     <input id="-25" type="radio" name="age" value="-25" /> 
                                     <label for="-25">Younger than 25</label>
@@ -196,14 +185,29 @@
                                     <label for="25-50">Between 25 and 50</label>
                                 </div>
                                 <div>
-                                    <input id="50-" type="radio" name="age" value="50-" chechked/>
+                                    <input id="50-" type="radio" name="age" value="50-" checked="" />
                                     <label for="50-">Older than 50</label>
                                 </div>
                                     
+                                <?php ;break; 
+                                default :?>
+                                <div>
+                                    <input id="-25" type="radio" name="age" value="-25" /> 
+                                    <label for="-25">Younger than 25</label>
+                                </div>
+                                <div>
+                                    <input id="25-50" type="radio" name="age" value="25-50" /> 
+                                    <label for="25-50">Between 25 and 50</label>
+                                </div>
+                                <div>
+                                    <input id="50-" type="radio" name="age" value="50-" />
+                                    <label for="50-">Older than 50</label>
+                                </div>
+                                <p style="color:red">*Es obligatorio seleccionar alguno<p>
                                 <?php } ?>
                             </div>
                             <?php if (!isset($age)) { ?> 
-                            <p style="color:red">*Es obligatorio seleccionar alguno<p>
+                            
                             <?php }?>
                         </div>
                         <div class="form-section">
@@ -219,6 +223,6 @@
                     </div>
                 </form>
             </div>
-    </body>
+    
 </html>
             <?php } ?>
