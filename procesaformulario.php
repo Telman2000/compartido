@@ -5,7 +5,7 @@
             $patronombre= "/^([A-Za-z\s]){3,25}$/";
             $patroncontrasena="/^[:alnum:\S]{6,8}$/";
             $patroncorreo="/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/";
-            $patrontelefono="/^([9-9])*$/";
+            $patrontelefono="/[0-9]{9,9}$/";
 
             $nombre= filter_input(INPUT_POST, "name");
             $contrasena= filter_input(INPUT_POST, "password");
@@ -39,7 +39,7 @@
             <p>Nombre: <?php echo "$nombre";?></p>  
             <p>Conraseña: <?php echo "$contrasena"; ?></p>
             <p>Email: <?php echo "$email"; ?></p>
-            <p>Fecha de cumpleaños: <?php echo "$fecha"; ?></p>
+            <p>Fecha de cumpleaños: <?php echo "$diacumpleaños"; ?></p>
             <p>Telefono movil: <?php echo "$telefono"; ?></p>
             <p>Tienda: <?php echo "$shop"; ?> </p>
             <p>Edad: <?php
@@ -85,7 +85,7 @@
                             <input id="name" type="text" name="name" placeholder="Enter your name:" >
                             <p style="color:red" >* El campo nombre puede contener solo mayusculas, minusculas y espacios</p>
                             <?php }else { ?>
-                            <input id="name" type="text" name="name" placeholder="Enter your name:" value="<?php echo $nombre=$_POST['name'];?>" /> 
+                            <input id="name" type="text" name="name" placeholder="Enter your name:" value="<?php echo "$nombre"; ?>" /> 
                             <?php } ?>
                         </div>
                         <div class="form-section">
@@ -94,7 +94,7 @@
                             <input id="password" type="password" name="password" placeholder="Enter your password:" >
                             <p style="color:red" >*La contraseña puede tener entre 6 y 8 caracteres, al menos un dígito, al menos una minúscula y una mayúscula.</p>
                             <?php }else { ?>
-                            <input id="password" type="password" name="password" placeholder="Enter your password:" value="<?php echo $contrasena=$_POST['password'];?>" /> 
+                            <input id="password" type="password" name="password" placeholder="Enter your password:" value="<?php echo "$contrasena"; ?>" /> 
                             <?php } ?>
                         </div>
                         <div class="form-section">
@@ -103,7 +103,7 @@
                             <input id="email" type="text"  name="email" placeholder="Enter your email" >
                             <p style="color:red">*Has introducido mal el correo electronico<p>
                             <?php }else { ?>
-                            <input id="email" type="text"  name="email" placeholder="Enter your email" value="<?php echo $email=$_POST['email'];?>" /> 
+                            <input id="email" type="text"  name="email" placeholder="Enter your email" value="<?php echo "$email"; ?>" /> 
                             <?php } ?>
                         </div>
                         <div class="form-section">
@@ -112,7 +112,7 @@
                             <?php if ($diacumpleaños=="") { ?> 
                             <p style="color:red">*Es obligatorio introducir tu edad<p>
                             <?php }else { ?>
-                            <!--<input id="dateofbirth" type="date" name="dateofbirth" placeholder="Enter your date of birth" value="<?php echo $diacumpleaños=$_POST['dateofbirth'];?>" />--> 
+                            <!--<input id="dateofbirth" type="date" name="dateofbirth" placeholder="Enter your date of birth" value="<?php// echo $diacumpleaños ?>" />--> 
                             <?php } ?>
                         </div>
                         <div class="form-section">
@@ -121,7 +121,7 @@
                             <input id="telephone" type="tel" name="tel" placeholder="Enter your telephone">
                             <p style="color:red">*El numero de telefono solo pueden ser digitos<p>
                             <?php }else { ?>
-                            <input id="telephone" type="tel" name="tel" placeholder="Enter your telephone" value="<?php echo $telefono=$_POST['tel'];?>" /> 
+                            <input id="telephone" type="tel" name="tel" placeholder="Enter your telephone" value="<?php echo "$telefono" ;?>" /> 
                             <?php } ?>
                         </div>
                         <div class="form-section">
