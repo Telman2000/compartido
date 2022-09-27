@@ -158,10 +158,7 @@
                             <label>Age:</label>
                             <div class="select-section">
                                 
-                                <?php 
-                                switch (age)
-                                
-                                {
+                                 <?php switch (age) {
                                 case "-25": ?>
                                     <div>
                                     <input id="-25" type="radio" name="age" value="-25" chechked /> 
@@ -182,15 +179,15 @@
                                     <label for="-25">Younger than 25</label>
                                 </div>
                                 <div>
-                                    <input id="25-50" type="radio" name="age" value="25-50" /> 
+                                    <input id="25-50" type="radio" name="age" value="25-50" chechked/> 
                                     <label for="25-50">Between 25 and 50</label>
                                 </div>
                                 <div>
                                     <input id="50-" type="radio" name="age" value="50-" />
                                     <label for="50-">Older than 50</label>
                                 </div>
-                                ?>
-                                case "50-": <div>
+                                <?php
+                                case "50-": ?><div>
                                     <input id="-25" type="radio" name="age" value="-25" /> 
                                     <label for="-25">Younger than 25</label>
                                 </div>
@@ -199,11 +196,11 @@
                                     <label for="25-50">Between 25 and 50</label>
                                 </div>
                                 <div>
-                                    <input id="50-" type="radio" name="age" value="50-" />
+                                    <input id="50-" type="radio" name="age" value="50-" chechked/>
                                     <label for="50-">Older than 50</label>
                                 </div>
                                     
-                                }?>
+                                <?php } ?>
                             </div>
                             <?php if (!isset($age)) { ?> 
                             <p style="color:red">*Es obligatorio seleccionar alguno<p>
