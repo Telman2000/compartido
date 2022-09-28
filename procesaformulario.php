@@ -17,11 +17,11 @@
             $subscription=filter_input(INPUT_POST, "subscription");
             
             
-            if (preg_match($patroncontrasena,$contrasena)&& 
-                    preg_match($patronombre,$nombre) && 
+            if (preg_match($patroncontrasena,$contrasena)&&
+                    preg_match($patronombre,$nombre) &&
                     preg_match($patroncorreo,$email)&& 
                     preg_match($patrontelefono,$telefono) && 
-                    isset ($_POST['age'])&&
+                    isset ($edad)&&
                     !$diacumpleaños=="")
             {?>
 <!DOCTYPE html>
@@ -51,7 +51,7 @@
                 echo "tienes mas de 50 años";}
             ?></p>
             <p>Subscription: <?php
-            if(!isset ($_POST ['subscription']))
+            if(!isset ($subscription))
             {
                 echo "No te has suscrito";
             } 
@@ -83,7 +83,7 @@
                             <?php if (!preg_match($patronombre,$nombre)) { ?> 
                             
                             <input id="name" type="text" name="name" placeholder="Enter your name:" >
-                            <p style="color:red" >* El campo nombre puede contener solo mayusculas, minusculas y espacios</p>
+                            <p style="color:red" >* El nombre puede contener letras mayúsculas, minúsculas, espacios y tiene una longitud entre 3 y 25 caracteres</p>
                             <?php }else { ?>
                             <input id="name" type="text" name="name" placeholder="Enter your name:" value="<?php echo "$nombre"; ?>" /> 
                             <?php } ?>
@@ -92,7 +92,7 @@
                             <label for="password">Contraseña:</Label> 
                             <?php if (!preg_match($patroncontrasena,$contrasena)) { ?> 
                             <input id="password" type="password" name="password" placeholder="Enter your password:" >
-                            <p style="color:red" >*La contraseña puede tener entre 6 y 8 caracteres, al menos un dígito, al menos una minúscula y una mayúscula.</p>
+                            <p style="color:red" >* La contraseña puede contener caracteres alfanuméricos y tiene una longitud entre 6 y 8 caracteres.</p>
                             <?php }else { ?>
                             <input id="password" type="password" name="password" placeholder="Enter your password:" value="<?php echo "$contrasena"; ?>" /> 
                             <?php } ?>
@@ -101,7 +101,7 @@
                             <label for="email">Email:</Label> 
                             <?php if (!preg_match($patroncorreo,$email)) { ?> 
                             <input id="email" type="text"  name="email" placeholder="Enter your email" >
-                            <p style="color:red">*Has introducido mal el correo electronico<p>
+                            <p style="color:red">*Error al introducir el correo electronico<p>
                             <?php }else { ?>
                             <input id="email" type="text"  name="email" placeholder="Enter your email" value="<?php echo "$email"; ?>" /> 
                             <?php } ?>
